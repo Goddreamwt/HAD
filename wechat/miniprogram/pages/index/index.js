@@ -7,7 +7,7 @@ Page({
     userInfo: {},
     logged: false,
     takeSession: false,
-    requestResult: ''
+    // requestResult: '',      imagePath:'http://tmp/wx0263defb02461a81.o6zAJs8UG5md089i-lEg2pvHbysc.ocF6poZa1XQLf8a15cd6a694541b22121078b6e6142b.gif',
   },
 
   onLoad: function() {
@@ -17,6 +17,9 @@ Page({
       })
       return
     }
+
+    let time = formatTime(new Date());
+    console.log(time);
 
     // 获取用户信息
     wx.getSetting({
@@ -79,6 +82,7 @@ Page({
 
   // 上传图片
   doUpload: function () {
+    var that = this;
     // 选择图片
     wx.chooseImage({
       count: 1,
@@ -93,7 +97,9 @@ Page({
         const filePath = res.tempFilePaths[0]
         
         // 上传图片
-        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
+   
+        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]+
+        console.log(cloudPath);
         wx.cloud.uploadFile({
           cloudPath,
           filePath,
@@ -103,7 +109,6 @@ Page({
             app.globalData.fileID = res.fileID
             app.globalData.cloudPath = cloudPath
             app.globalData.imagePath = filePath
-            
             wx.navigateTo({
               url: '../storageConsole/storageConsole'
             })
@@ -127,4 +132,57 @@ Page({
     })
   },
 
+  //下载图片
+  downloadFile:function(){
+    var that = this
+    wx.cloud.downloadFile({
+      fileID: 'cloud://had-development-697e49.ddea-had-development-697e49/my-image.gif', // 文件 ID
+      success: res => {
+        // 返回临时文件路径
+        console.log(res)
+       
+      },
+      fail: console.error
+    })
+  },
+
+  getTempFileURL:function(){
+    var that = this;
+    wx.cloud.getTempFileURL({
+      fileList: ['cloud://had-development-697e49.ddea-had-development-697e49/my-image.gif'],
+      success: res => {
+        // fileList 是一个有如下结构的对象数组
+        // [{
+        //    fileID: 'cloud://xxx.png', // 文件 ID
+        //    tempFileURL: '', // 临时文件网络链接
+        //    maxAge: 120 * 60 * 1000, // 有效期
+        // }]
+        console.log(res.fileList)
+        that.setData({
+          fileID: res.fileList[0].fileID,
+          imagePath: res.fileList[0].tempFileURL,
+        })
+      },
+      fail: console.error
+    })
+  }
+
 })
+
+
+function formatTime(date) {
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var day = date.getDate()
+
+  var hour = date.getHours()
+  var minute = date.getMinutes()
+  var second = date.getSeconds()
+
+  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+}
+
+function formatNumber(n) {
+  n = n.toString()
+  return n[1] ? n : '0' + n
+} 

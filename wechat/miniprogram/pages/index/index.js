@@ -18,8 +18,7 @@ Page({
       return
     }
 
-    let time = formatTime(new Date());
-    console.log(time);
+
 
     // 获取用户信息
     wx.getSetting({
@@ -97,8 +96,13 @@ Page({
         const filePath = res.tempFilePaths[0]
         
         // 上传图片
-   
-        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]+
+
+        //获取当前时间戳
+        var timestamp = Date.parse(new Date());
+        timestamp = timestamp / 1000;
+        console.log("当前时间戳为：" + timestamp);
+        const cloudPath = 'my-image' + timestamp + filePath.match(/\.[^.]+?$/)[0];
+
         console.log(cloudPath);
         wx.cloud.uploadFile({
           cloudPath,

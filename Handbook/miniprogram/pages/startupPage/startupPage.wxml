@@ -1,2 +1,20 @@
-<!--pages/startupPage/startupPage.wxml-->
-<text>pages/startupPage/startupPage.wxml</text>
+<view class="bgView">
+   <!-- 微信头像昵称 -->
+  <view class="headerView">
+    <image class="avatarImg" src="{{userInfo.avatarUrl}}"></image>
+    <text wx:if="{{userInfo.nickName}}" class="nameTetx">您好  {{userInfo.nickName}}</text>
+  </view>
+  <!-- 微信头像昵称-END -->
+
+  <image src="./../../images/bgImgs/startPage.png" class='indexBgImg'></image>
+  <image src='./../../images/icons/add.png' class='addImg' animation="{{animationMiddleHeaderItem}}"></image>
+  <form name='pushMsgFm' report-submit bindsubmit='addSubmit'>
+    <button form-type="submit" class='addButton'></button>
+  </form> 
+
+  <view class='cloudView'>
+    <image class='cloud1' src='./../../images/icons/cloud1.png'></image>
+    <image class='cloud2' src='./../../images/icons/cloud2.png'></image>
+    <image class='cloud3' src='./../../images/icons/cloud3.png'></image>
+  </view>
+</view>

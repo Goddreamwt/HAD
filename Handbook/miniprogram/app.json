@@ -1,0 +1,14 @@
+{
+  "cloud": true,
+  "pages": [
+    "pages/startupPage/startupPage",
+    "pages/index/index"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FDCE48",
+    "navigationBarTitleText": "随手账目录",
+    "navigationBarTextStyle": "white"
+  }
+}

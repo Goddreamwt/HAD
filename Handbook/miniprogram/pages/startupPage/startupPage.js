@@ -1,4 +1,6 @@
 var animationUtil = require('./../../utils/animationUtil.js')
+var databaseUtil = require('./../../utils/databaseUtil.js')
+const app = getApp()
 
 Page({
 
@@ -15,31 +17,27 @@ Page({
    */
   onLoad: function (options) {
     animationUtil.animationMiddleHeaderItem(this);
-
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              console.log(res);
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo
-              })
-            }
-          })
-        }
-      }
-    })
+    databaseUtil.onGetOpenid(this,this.openidCallBack,'login');
+    databaseUtil.getSetting(this);
   },
-  //添加习惯
+
+  /**
+   * 回调_获取oepnid
+   */
+  openidCallBack: function (event){
+    wx.setStorageSync("openid", event)
+  },
+
+  /*
+   *点击_添加习惯
+   */
   addSubmit: function (event) {
+
     wx.redirectTo({
       url: '../addHabit/addHabit',
     })
   },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

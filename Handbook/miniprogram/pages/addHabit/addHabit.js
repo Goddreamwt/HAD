@@ -1,4 +1,7 @@
-// pages/addHabit/addHabit.js
+var animationUtil = require('./../../utils/animationUtil.js')
+var databaseUtil = require('./../../utils/databaseUtil.js')
+const app = getApp()
+
 Page({
 
   /**
@@ -12,7 +15,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var openid = wx.getStorageSync('openid')
+    var searchData ={
+      // openid: openid
+      _id: "W6Cwe7OVH2exDS99"
+    }
+    databaseUtil.searchDB(this,this.imageUrlCallBack,'imgs',searchData);
+  },
 
+  /**
+    * 回调_获取图片路径
+    */
+  imageUrlCallBack: function (data) {
+    console.log(data);
+    // var that = this;
+    // that.setData({
+    //   openid: event
+    // })
   },
 
   /**

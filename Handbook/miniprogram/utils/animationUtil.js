@@ -4,7 +4,7 @@ module.exports = {
   animationMiddleHeaderItem: animationMiddleHeaderItem,//心跳动画
 }
 
-// 平移动画
+// 心跳动画
 function animationMiddleHeaderItem(that) {
   var circleCount = 0;
   // 心跳的外框动画  
